@@ -1035,6 +1035,9 @@ static void modesSendWiffleOutput(struct modesMessage* mm, struct aircraft* a) {
    if (!p)
       return;
 
+   sprintf(p, "1090,");
+   p += 5;
+
    if (Modes.mlat && mm->timestampMsg) {
       /* timestamp, big-endian */
       sprintf(p, "@%012" PRIX64,
@@ -1060,11 +1063,13 @@ static void modesSendWiffleOutput(struct modesMessage* mm, struct aircraft* a) {
 
    p = safe_snprintf(p, p + 100,
       "%06x," // ICAO
+      "%d," // AddrType (or Addr Qual)
       "%d," // DF 
       "%.1f", // RSSI
        mm->addr,
-      mm->msgtype, 
-      10 * log10(mm->signalLevel) // RSSI
+       (int)mm->addrtype,
+       mm->msgtype, 
+       10 * log10(mm->signalLevel) // RSSI
       );
    *p++ = ',';
 
