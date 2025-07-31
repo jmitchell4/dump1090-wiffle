@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="adaptive.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ais_charset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="anet.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="comm_b.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="convert.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cpr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cprtests.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cpu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="demod_2400.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dump1090.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="faup1090.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fifo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="icao_filter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interactive.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mode_ac.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mode_s.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="net_io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_bladerf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_hackrf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_ifile.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_limesdr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_rtlsdr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_soapy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdr_stub.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stats.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="track.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="view1090.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile.cpufeatures" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adaptive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ais_charset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="anet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="comm_b.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="convert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cpu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="demod_2400.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsp-types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dump1090.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fifo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="icao_filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mode_s.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="net_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdr_bladerf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdr_hackrf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdr_ifile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdr_limesdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdr_rtlsdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdr_soapy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="track.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
