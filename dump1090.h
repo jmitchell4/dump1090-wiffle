@@ -339,6 +339,7 @@ struct _Modes {                             // Internal state
     struct net_writer beast_cooked_out;          // Beast-format output, "cooked" mode
     struct net_writer sbs_out;                   // SBS-format output
     struct net_writer stratux_out;               // Stratux-format output
+    struct net_writer wiffle_out;                // Wiffle-format output
     struct net_writer fatsv_out;                 // FATSV-format output
 
 #ifdef _WIN32
@@ -365,6 +366,7 @@ struct _Modes {                             // Internal state
     char *net_output_stratux_ports;  // List of Stratux output TCP ports
     char *net_input_beast_ports;     // List of Beast input TCP ports
     char *net_output_beast_ports;    // List of Beast output TCP ports
+    char* net_output_wiffle_ports;   // List of Wiffle output TCP ports
     char *net_bind_address;          // Bind address
     int   net_sndbuf_size;           // TCP output buffer size (64Kb * 2^n)
     int   net_verbatim;              // if true, Beast output connections default to verbatim mode

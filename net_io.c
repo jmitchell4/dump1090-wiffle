@@ -79,6 +79,7 @@ static void send_raw_heartbeat(struct net_service *service);
 static void send_beast_heartbeat(struct net_service *service);
 static void send_sbs_heartbeat(struct net_service *service);
 static void send_stratux_heartbeat(struct net_service *service);
+static void send_wiffle_heartbeat(struct net_service *service);
 
 static void writeBeastMessage(struct net_writer *writer, uint64_t timestamp, double signalLevel, unsigned char *msg, int msgLen);
 
@@ -285,6 +286,9 @@ void modesInitNet(void) {
 
     s = serviceInit("Stratux TCP output", &Modes.stratux_out, send_stratux_heartbeat, READ_MODE_IGNORE, NULL, NULL);
     serviceListen(s, Modes.net_bind_address, Modes.net_output_stratux_ports);
+
+    s = serviceInit("Wiffle TCP output", &Modes.wiffle_out, send_wiffle_heartbeat, READ_MODE_IGNORE, NULL, NULL);
+    serviceListen(s, Modes.net_bind_address, Modes.net_output_wiffle_ports);
 
     s = serviceInit("Raw TCP input", NULL, NULL, READ_MODE_ASCII, "\n", decodeHexMessage);
     serviceListen(s, Modes.net_bind_address, Modes.net_input_raw_ports);
@@ -1011,6 +1015,91 @@ static void send_stratux_heartbeat(struct net_service *service)
 //
 //=========================================================================
 //
+// Write Wiffle output to TCP clients
+//
+static void modesSendWiffleOutput(struct modesMessage* mm, struct aircraft* a) {
+   // Don't ever forward mlat messages via raw output.
+   if (mm->source == SOURCE_MLAT)
+      return;
+
+   // Filter some messages
+   // Don't forward 2-bit-corrected messages
+   if (mm->correctedbits >= 2)
+      return;
+
+   // Don't forward unreliable messages
+   if ((a && !a->reliable) && !mm->reliable)
+      return;
+
+   int msgLen = mm->msgbits / 8;
+   char* p = prepareWrite(&Modes.wiffle_out, msgLen * 2 + 15 + 100); // 100?
+   if (!p)
+      return;
+
+   if (Modes.mlat && mm->timestampMsg) {
+      /* timestamp, big-endian */
+      sprintf(p, "@%012" PRIX64,
+         mm->timestampMsg);
+      p += 13;
+   }
+   else if (mm->sysTimestampMsg) {
+      time_t epoch = mm->sysTimestampMsg / 1000.0;
+      int milliseconds = mm->sysTimestampMsg % 1000;
+      struct tm* local_tm = gmtime(&epoch);
+      char time_string[80];
+      strftime(time_string, sizeof(time_string), "%Y-%m-%dT%H:%M:%S", local_tm);
+      sprintf(&time_string[strlen(time_string)], ".%03dZ", milliseconds);
+      sprintf(p, "%s,%lu",
+         time_string,
+         mm->sysTimestampMsg);
+      p += 13 + strlen(time_string) + 1;
+   }
+   else {
+      *p++ = '*';
+   }
+   *p++ = ',';
+
+   p = safe_snprintf(p, p + 100,
+      "%06x," // ICAO
+      "%d," // DF 
+      "%.1f", // RSSI
+       mm->addr,
+      mm->msgtype, 
+      10 * log10(mm->signalLevel) // RSSI
+      );
+   *p++ = ',';
+
+   unsigned char* msg = mm->msg; // raw squitter
+   for (int j = 0; j < msgLen; j++) {
+      sprintf(p, "%02x", msg[j]);
+      p += 2;
+   }
+
+   *p++ = '\n';
+
+   completeWrite(&Modes.wiffle_out, p);
+}
+
+static void send_wiffle_heartbeat(struct net_service* service)
+{
+   static char* heartbeat_message = "heartbeat\r\n";
+   char* data;
+   int len = strlen(heartbeat_message);
+
+   if (!service->writer)
+      return;
+
+   data = prepareWrite(service->writer, len);
+   if (!data)
+      return;
+
+   memcpy(data, heartbeat_message, len);
+   completeWrite(service->writer, data + len);
+}
+
+//
+//=========================================================================
+//
 void modesQueueOutput(struct modesMessage *mm, struct aircraft *a) {
 
     // Delegate to the format-specific outputs, each of which makes its own decision about filtering messages
@@ -1021,6 +1110,7 @@ void modesQueueOutput(struct modesMessage *mm, struct aircraft *a) {
     modesSendBeastVerbatimLocalOutput(mm);
     modesSendBeastCookedOutput(mm, a);
     writeFATSVEvent(mm, a);
+    modesSendWiffleOutput(mm, a);
 }
 
 // Decode a little-endian IEEE754 float (binary32)
