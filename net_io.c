@@ -79,7 +79,6 @@ static void send_raw_heartbeat(struct net_service *service);
 static void send_beast_heartbeat(struct net_service *service);
 static void send_sbs_heartbeat(struct net_service *service);
 static void send_stratux_heartbeat(struct net_service *service);
-static void send_wiffle_heartbeat(struct net_service *service);
 
 static void writeBeastMessage(struct net_writer *writer, uint64_t timestamp, double signalLevel, unsigned char *msg, int msgLen);
 
@@ -287,7 +286,7 @@ void modesInitNet(void) {
     s = serviceInit("Stratux TCP output", &Modes.stratux_out, send_stratux_heartbeat, READ_MODE_IGNORE, NULL, NULL);
     serviceListen(s, Modes.net_bind_address, Modes.net_output_stratux_ports);
 
-    s = serviceInit("Wiffle TCP output", &Modes.wiffle_out, send_wiffle_heartbeat, READ_MODE_IGNORE, NULL, NULL);
+    s = serviceInit("Wiffle TCP output", &Modes.wiffle_out, NULL, READ_MODE_IGNORE, NULL, NULL);
     serviceListen(s, Modes.net_bind_address, Modes.net_output_wiffle_ports);
 
     s = serviceInit("Raw TCP input", NULL, NULL, READ_MODE_ASCII, "\n", decodeHexMessage);
@@ -1078,23 +1077,6 @@ static void modesSendWiffleOutput(struct modesMessage* mm, struct aircraft* a) {
    *p++ = '\n';
 
    completeWrite(&Modes.wiffle_out, p);
-}
-
-static void send_wiffle_heartbeat(struct net_service* service)
-{
-   static char* heartbeat_message = "heartbeat\r\n";
-   char* data;
-   int len = strlen(heartbeat_message);
-
-   if (!service->writer)
-      return;
-
-   data = prepareWrite(service->writer, len);
-   if (!data)
-      return;
-
-   memcpy(data, heartbeat_message, len);
-   completeWrite(service->writer, data + len);
 }
 
 //
