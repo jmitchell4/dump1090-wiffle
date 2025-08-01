@@ -2310,7 +2310,7 @@ void useModesMessage(struct modesMessage *mm) {
 
     // In non-interactive non-quiet mode, display messages on standard output
     if (!Modes.interactive && !Modes.quiet && (!Modes.show_only || mm->addr == Modes.show_only)) {
-       if (Modes.wiffle_csv_output) {
+       if (Modes.wiffle_stdout) {
           displayModesMessageAsWiffleCsv(mm);
        }
        else {

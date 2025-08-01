@@ -764,8 +764,8 @@ int main(int argc, char **argv) {
             Modes.mlat = 1;
         } else if (!strcmp(argv[j],"--oversample")) {
             // Ignored
-        } else if (!strcmp(argv[j], "--wiffle-output")) {
-           Modes.wiffle_csv_output = 1;
+        } else if (!strcmp(argv[j], "--wiffle-stdout")) {
+           Modes.wiffle_stdout = 1;
         } else if (!strcmp(argv[j], "--write-json") && more) {
             Modes.json_dir = strdup(argv[++j]);
         } else if (!strcmp(argv[j], "--write-json-every") && more) {
