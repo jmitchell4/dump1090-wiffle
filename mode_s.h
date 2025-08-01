@@ -83,6 +83,7 @@ int modesMessageLenByType(int type);
 score_rank scoreModesMessage(const unsigned char *msg);
 int decodeModesMessage (struct modesMessage *mm, const unsigned char *msg);
 void displayModesMessage(struct modesMessage *mm);
+void displayModesMessageAsWiffleCsv(struct modesMessage *mm);
 void useModesMessage    (struct modesMessage *mm);
 
 // datafield extraction helpers

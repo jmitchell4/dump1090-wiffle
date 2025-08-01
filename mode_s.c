@@ -2261,6 +2261,32 @@ void displayModesMessage(struct modesMessage *mm) {
     fflush(stdout);
 }
 
+void displayModesMessageAsWiffleCsv(struct modesMessage* mm) {
+   time_t epoch = mm->sysTimestampMsg / 1000.0;
+   int milliseconds = mm->sysTimestampMsg % 1000;
+   struct tm* local_tm = gmtime(&epoch);
+   char time_string[80];
+   strftime(time_string, sizeof(time_string), "%Y-%m-%dT%H:%M:%S", local_tm);
+   sprintf(&time_string[strlen(time_string)], ".%03dZ", milliseconds);
+
+   printf("1090,%s,%lu,%06x,%d,%d,%.1f,",
+      time_string,
+      mm->sysTimestampMsg,
+      mm->addr,
+      (int)mm->addrtype,
+      mm->msgtype,
+      10 * log10(mm->signalLevel));
+
+   int msgLen = mm->msgbits / 8;
+   unsigned char* msg = mm->msg; // raw squitter
+   for (int j = 0; j < msgLen; j++) {
+      printf("%02x", msg[j]);
+   }
+
+   printf("\n");
+   fflush(stdout);
+}
+
 //
 //=========================================================================
 //
@@ -2284,7 +2310,12 @@ void useModesMessage(struct modesMessage *mm) {
 
     // In non-interactive non-quiet mode, display messages on standard output
     if (!Modes.interactive && !Modes.quiet && (!Modes.show_only || mm->addr == Modes.show_only)) {
-        displayModesMessage(mm);
+       if (Modes.wiffle_csv_output) {
+          displayModesMessageAsWiffleCsv(mm);
+       }
+       else {
+          displayModesMessage(mm);
+       }
     }
 
     // Feed output clients; modesQueueOutput appropriately filters messages to the different outputs.

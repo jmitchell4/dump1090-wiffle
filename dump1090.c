@@ -416,6 +416,7 @@ static void showHelp(void)
 "--json-stats-every <t>   Write json stats output every t seconds (default 60)\n"
 "--json-location-accuracy <n>  Accuracy of receiver location in json metadata\n"
 "                          (0=no location, 1=approximate, 2=exact)\n"
+"--wiffle-output          Print wiffle CSV output to screen \n"
 "\n"
 "      Interactive mode\n"
 "\n"
@@ -763,6 +764,8 @@ int main(int argc, char **argv) {
             Modes.mlat = 1;
         } else if (!strcmp(argv[j],"--oversample")) {
             // Ignored
+        } else if (!strcmp(argv[j], "--wiffle-output")) {
+           Modes.wiffle_csv_output = 1;
         } else if (!strcmp(argv[j], "--write-json") && more) {
             Modes.json_dir = strdup(argv[++j]);
         } else if (!strcmp(argv[j], "--write-json-every") && more) {
