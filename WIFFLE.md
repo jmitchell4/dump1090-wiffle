@@ -4,6 +4,8 @@ The name `wiffle` was chosen due to an AI prompt to ask for a playful but fast C
 
 The Wiffle CSV output is a normalized CSV output to align a fork of `dump1090` and `dump978`.  This output is provided both via an optional stdout as well as a TCP service. 
 
+The CSV delimiter is a comma, with no space between fields. 
+
 | Column | Field | Description | Example |
 |---|---|---|---|
 | 1 | Link Type | Indicator of 1090 vs UAT | `1090`, `uat-`, `uat+` | 
@@ -13,10 +15,11 @@ The Wiffle CSV output is a normalized CSV output to align a fork of `dump1090` a
 | 5 | Message Type | Either indicator of the address type (1090) or the address qualifier (UAT) | `ADSB0`, `TISB3` |
 | 6 | DF (1090) / Downlink/Uplink (UAT) | Either DF (1090) or downlink/uplink (UAT) | `DF17`, `UP2` |
 | 7 | RSSI | RSSI signal level | `-23.0` |
+| 8 | Raw Squitter | Original squitter in hexadecimal | `02a183974a3177` |
 
 Example output: 
 
-> 1090,2025-08-05T01:09:46.775Z,1754356186775,ac578c,ADSB0,DF0,-23.0,02a183974a3177
+    1090,2025-08-05T01:09:46.775Z,1754356186775,ac578c,ADSB0,DF0,-23.0,02a183974a3177
 
 ## Detailed Fields 
 
