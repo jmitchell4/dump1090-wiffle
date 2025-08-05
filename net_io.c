@@ -1035,6 +1035,27 @@ static void modesSendWiffleOutput(struct modesMessage* mm, struct aircraft* a) {
    if (!p)
       return;
 
+   char aq[5];
+   aq[4] = 0;
+   switch (mm->addrtype) {
+   case ADDR_ADSB_ICAO:
+   case ADDR_ADSB_ICAO_NT:
+      sprintf(aq, "ADSB");
+      break;
+   case ADDR_ADSR_ICAO:
+   case ADDR_ADSR_OTHER:
+      sprintf(aq, "ADSR");
+      break;
+   case ADDR_TISB_ICAO:
+   case ADDR_TISB_TRACKFILE:
+   case ADDR_TISB_OTHER:
+      sprintf(aq, "TISB");
+      break;
+   default:
+      sprintf(aq, "UNKN");
+      break;
+   }
+
    sprintf(p, "1090,");
    p += 5;
 
@@ -1063,10 +1084,11 @@ static void modesSendWiffleOutput(struct modesMessage* mm, struct aircraft* a) {
 
    p = safe_snprintf(p, p + 100,
       "%06x," // ICAO
-      "%d," // AddrType (or Addr Qual)
-      "%d," // DF 
+      "%s%d," // AddrType (or Addr Qual)
+      "DF%d," // DF 
       "%.1f", // RSSI
        mm->addr,
+       aq,
        (int)mm->addrtype,
        mm->msgtype, 
        10 * log10(mm->signalLevel) // RSSI

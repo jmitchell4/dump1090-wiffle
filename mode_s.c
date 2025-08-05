@@ -2269,10 +2269,32 @@ void displayModesMessageAsWiffleCsv(struct modesMessage* mm) {
    strftime(time_string, sizeof(time_string), "%Y-%m-%dT%H:%M:%S", local_tm);
    sprintf(&time_string[strlen(time_string)], ".%03dZ", milliseconds);
 
-   printf("1090,%s,%lu,%06x,%d,%d,%.1f,",
+   char aq[5];
+   aq[4] = 0;
+   switch (mm->addrtype) {
+   case ADDR_ADSB_ICAO:
+   case ADDR_ADSB_ICAO_NT:
+      sprintf(aq, "ADSB");
+      break;
+   case ADDR_ADSR_ICAO:
+   case ADDR_ADSR_OTHER:
+      sprintf(aq, "ADSR");
+      break;
+   case ADDR_TISB_ICAO:
+   case ADDR_TISB_TRACKFILE:
+   case ADDR_TISB_OTHER:
+      sprintf(aq, "TISB");
+      break;
+   default:
+      sprintf(aq, "UNKN");
+      break;
+   }
+
+   printf("1090,%s,%lu,%06x,%s%d,DF%d,%.1f,",
       time_string,
       mm->sysTimestampMsg,
-      mm->addr,
+      mm->addr & 0xffffff,
+      aq,
       (int)mm->addrtype,
       mm->msgtype,
       10 * log10(mm->signalLevel));
